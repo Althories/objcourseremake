@@ -1,4 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://bym6y8lmq532b"]
+[gd_scene load_steps=10 format=3 uid="uid://bym6y8lmq532b"]
+
+[ext_resource type="PackedScene" uid="uid://wbaf6ib51wiv" path="res://Scenes/Character/character.tscn" id="1_jjgbg"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
+sky_top_color = Color(0.815643, 0.935089, 0.991953, 1)
+sky_horizon_color = Color(0.571484, 0.60464, 0.612589, 1)
+sky_energy_multiplier = 2.0
+ground_bottom_color = Color(0.396218, 0.620346, 0.787192, 1)
+ground_horizon_color = Color(0.737255, 0.85098, 0.905882, 1)
+
+[sub_resource type="Sky" id="Sky_bo1nx"]
+sky_material = SubResource("ProceduralSkyMaterial_jjgbg")
+
+[sub_resource type="Environment" id="Environment_8gbba"]
+background_mode = 2
+sky = SubResource("Sky_bo1nx")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7u77a"]
 albedo_color = Color(0.1836, 0.27744, 0.34, 1)
@@ -17,60 +33,73 @@ size = Vector3(50, 1, 1)
 
 [node name="Main" type="Node"]
 
-[node name="WorldGeometry" type="Node3D" parent="."]
+[node name="Character" type="Node3D" parent="."]
 
-[node name="Ground" type="StaticBody3D" parent="WorldGeometry"]
+[node name="CharacterBody3D" parent="Character" instance=ExtResource("1_jjgbg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_8gbba")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 13, 0)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="WorldGeometry" type="Node3D" parent="World"]
+
+[node name="Ground" type="StaticBody3D" parent="World/WorldGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0504982, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldGeometry/Ground"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/WorldGeometry/Ground"]
 transform = Transform3D(50, 0, 0, 0, 0.1, 0, 0, 0, 50, 0, 0, 0)
 mesh = SubResource("BoxMesh_7u77a")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldGeometry/Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/WorldGeometry/Ground"]
 shape = SubResource("BoxShape3D_jjgbg")
 
-[node name="Walls" type="Node3D" parent="WorldGeometry"]
+[node name="Walls" type="Node3D" parent="World/WorldGeometry"]
 
-[node name="Exterior Walls" type="Node3D" parent="WorldGeometry/Walls"]
+[node name="Exterior Walls" type="Node3D" parent="World/WorldGeometry/Walls"]
 
-[node name="ExtWallS" type="StaticBody3D" parent="WorldGeometry/Walls/Exterior Walls"]
+[node name="ExtWallS" type="StaticBody3D" parent="World/WorldGeometry/Walls/Exterior Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25.5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldGeometry/Walls/Exterior Walls/ExtWallS"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallS"]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_ohd7w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldGeometry/Walls/Exterior Walls/ExtWallS"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallS"]
 shape = SubResource("BoxShape3D_7u77a")
 
-[node name="ExtWallW" type="StaticBody3D" parent="WorldGeometry/Walls/Exterior Walls"]
+[node name="ExtWallW" type="StaticBody3D" parent="World/WorldGeometry/Walls/Exterior Walls"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -25.5, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldGeometry/Walls/Exterior Walls/ExtWallW"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallW"]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_ohd7w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldGeometry/Walls/Exterior Walls/ExtWallW"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallW"]
 shape = SubResource("BoxShape3D_7u77a")
 
-[node name="ExtWallW2" type="StaticBody3D" parent="WorldGeometry/Walls/Exterior Walls"]
+[node name="ExtWallW2" type="StaticBody3D" parent="World/WorldGeometry/Walls/Exterior Walls"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25.5, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldGeometry/Walls/Exterior Walls/ExtWallW2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallW2"]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_ohd7w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldGeometry/Walls/Exterior Walls/ExtWallW2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallW2"]
 shape = SubResource("BoxShape3D_7u77a")
 
-[node name="ExtWallN" type="StaticBody3D" parent="WorldGeometry/Walls/Exterior Walls"]
+[node name="ExtWallN" type="StaticBody3D" parent="World/WorldGeometry/Walls/Exterior Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -25.5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldGeometry/Walls/Exterior Walls/ExtWallN"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallN"]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_ohd7w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldGeometry/Walls/Exterior Walls/ExtWallN"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallN"]
 shape = SubResource("BoxShape3D_7u77a")
-
-[node name="Character" type="Node3D" parent="."]
