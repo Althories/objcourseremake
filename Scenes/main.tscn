@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://bym6y8lmq532b"]
+[gd_scene load_steps=19 format=3 uid="uid://bym6y8lmq532b"]
 
 [ext_resource type="Script" uid="uid://dg7igqr1g1jgf" path="res://Scripts/charac_cam.gd" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://dq1od00yllol3" path="res://Scripts/character.gd" id="1_jjgbg"]
 [ext_resource type="AudioStream" uid="uid://cwwt8pmi2wek2" path="res://Audio/In The Navy-usQ5_u7myic.mp3" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://btiewdhg87xca" path="res://Scenes/Assets/obstacle.tscn" id="3_jjvhh"]
+[ext_resource type="Script" uid="uid://csn6v28cyff5v" path="res://Scripts/collision_label.gd" id="5_kry3j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hew0n"]
 albedo_color = Color(0.1368, 0.72, 0.26316, 1)
@@ -170,12 +171,16 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="CodeEdit" type="CodeEdit" parent="Control"]
+[node name="Label" type="Label" parent="Control"]
+self_modulate = Color(0.10748, 0.10748, 0.10748, 1)
 layout_mode = 0
-offset_left = 1045.0
-offset_top = 12.0
-offset_right = 1138.0
-offset_bottom = 48.0
-text = "Hello chat"
+offset_left = 510.0
+offset_top = 113.0
+offset_right = 644.0
+offset_bottom = 136.0
+text = "Collision Count: 0"
+horizontal_alignment = 2
+script = ExtResource("5_kry3j")
 
-[connection signal="collided" from="World/WorldGeometry/Obstacles/Obstacle" to="Character/CharacterBody3D" method="_on_obstacle_collided"]
+[connection signal="col_count_up" from="Character/CharacterBody3D" to="Control/Label" method="_on_col_count_up"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Obstacle" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]

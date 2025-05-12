@@ -1,9 +1,10 @@
 extends CharacterBody3D
 
 
-const SPEED = 5.0
+const SPEED = 10.0
 const JUMP_VELOCITY = 4.5
 
+signal col_count_up
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -20,14 +21,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	move_and_slide()
-	
+		
 	#Make CamController match position of character
 	#lerp(where we start, where we end, how quickly)
 	$CamController.position = lerp($CamController.position, position, .07)
 
+	move_and_slide()
 
-func _on_obstacle_collided() -> void:
-	#reset player position to start plane on obstacle collision
+func _on_obstacle_body_entered(_body: Node3D) -> void:
 	position = Vector3(-23, 0, 23)
+	emit_signal("col_count_up")
