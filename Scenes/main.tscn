@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bym6y8lmq532b"]
+[gd_scene load_steps=15 format=3 uid="uid://bym6y8lmq532b"]
 
 [ext_resource type="Script" uid="uid://dg7igqr1g1jgf" path="res://Scripts/charac_cam.gd" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://dq1od00yllol3" path="res://Scripts/character.gd" id="1_jjgbg"]
+[ext_resource type="AudioStream" uid="uid://cwwt8pmi2wek2" path="res://Audio/In The Navy-usQ5_u7myic.mp3" id="3_8gbba"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hew0n"]
 albedo_color = Color(0.1368, 0.72, 0.26316, 1)
@@ -132,3 +133,11 @@ mesh = SubResource("BoxMesh_ohd7w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallN"]
 shape = SubResource("BoxShape3D_7u77a")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_8gbba")
+volume_db = -15.0
+autoplay = true
+parameters/looping = true
