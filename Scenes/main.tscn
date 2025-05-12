@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bym6y8lmq532b"]
+[gd_scene load_steps=18 format=3 uid="uid://bym6y8lmq532b"]
 
 [ext_resource type="Script" uid="uid://dg7igqr1g1jgf" path="res://Scripts/charac_cam.gd" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://dq1od00yllol3" path="res://Scripts/character.gd" id="1_jjgbg"]
@@ -43,13 +43,19 @@ size = Vector3(50, 0.1, 50)
 resource_local_to_scene = true
 size = Vector3(50, 1, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjvhh"]
+albedo_color = Color(0.2832, 0.59, 0.503073, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kry3j"]
+material = SubResource("StandardMaterial3D_jjvhh")
+
 [node name="Main" type="Node"]
 
 [node name="Character" type="Node3D" parent="."]
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="Character"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0, 23)
 script = ExtResource("1_jjgbg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Character/CharacterBody3D"]
@@ -60,7 +66,7 @@ mesh = SubResource("BoxMesh_hew0n")
 shape = SubResource("BoxShape3D_vwk55")
 
 [node name="CamController" type="Node3D" parent="Character/CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 0.855482, 0.517833, 0, -0.517833, 0.855482, 0, 0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 0.855482, 0.517833, 0, -0.517833, 0.855482, -23, 0, 23)
 top_level = true
 
 [node name="CameraTarget" type="Node3D" parent="Character/CharacterBody3D/CamController"]
@@ -140,6 +146,16 @@ shape = SubResource("BoxShape3D_7u77a")
 [node name="Obstacle" parent="World/WorldGeometry/Obstacles" instance=ExtResource("3_jjvhh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75257, 0, 0)
 
+[node name="Start_Plane" type="MeshInstance3D" parent="World/WorldGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0, 23)
+mesh = SubResource("PlaneMesh_kry3j")
+skeleton = NodePath("../../..")
+
+[node name="End_Plane" type="MeshInstance3D" parent="World/WorldGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -23)
+mesh = SubResource("PlaneMesh_kry3j")
+skeleton = NodePath("../../..")
+
 [node name="Audio" type="Node" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Audio"]
@@ -147,5 +163,19 @@ stream = ExtResource("3_8gbba")
 volume_db = -15.0
 autoplay = true
 parameters/looping = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CodeEdit" type="CodeEdit" parent="Control"]
+layout_mode = 0
+offset_left = 1045.0
+offset_top = 12.0
+offset_right = 1138.0
+offset_bottom = 48.0
+text = "Hello chat"
 
 [connection signal="collided" from="World/WorldGeometry/Obstacles/Obstacle" to="Character/CharacterBody3D" method="_on_obstacle_collided"]

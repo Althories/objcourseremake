@@ -29,5 +29,5 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_obstacle_collided() -> void:
-	#reset player position on obstacle collision
-	position = Vector3(0, 0, 0)
+	#reset player position to start plane on obstacle collision
+	position = Vector3(-23, 0, 23)
