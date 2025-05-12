@@ -20,9 +20,3 @@ mesh = SubResource("BoxMesh_hew0n")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_vwk55")
-
-[node name="CamPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.855482, 0.517833, 0, -0.517833, 0.855482, 0, 0, 0)
-
-[node name="Camera3D" type="Camera3D" parent="CamPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.68078)

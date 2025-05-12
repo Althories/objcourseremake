@@ -6,6 +6,8 @@ const JUMP_VELOCITY = 4.5
 
 
 func _physics_process(delta: float) -> void:
+	
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -26,3 +28,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+	
+	#Make CamController match position of character
+	#lerp(where we start, where we end, how quickly)
+	$CamController.position = lerp($CamController.position, position, .07)

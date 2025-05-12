@@ -1,6 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://bym6y8lmq532b"]
+[gd_scene load_steps=14 format=3 uid="uid://bym6y8lmq532b"]
 
-[ext_resource type="PackedScene" uid="uid://wbaf6ib51wiv" path="res://Scenes/Character/character.tscn" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://dg7igqr1g1jgf" path="res://Scripts/charac_cam.gd" id="1_bo1nx"]
+[ext_resource type="Script" uid="uid://dq1od00yllol3" path="res://Scripts/character.gd" id="1_jjgbg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hew0n"]
+albedo_color = Color(0.1368, 0.72, 0.26316, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hew0n"]
+material = SubResource("StandardMaterial3D_hew0n")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vwk55"]
+size = Vector3(1.5, 0.5, 1.5)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
 sky_top_color = Color(0.815643, 0.935089, 0.991953, 1)
@@ -35,8 +45,27 @@ size = Vector3(50, 1, 1)
 
 [node name="Character" type="Node3D" parent="."]
 
-[node name="CharacterBody3D" parent="Character" instance=ExtResource("1_jjgbg")]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="Character"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+script = ExtResource("1_jjgbg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Character/CharacterBody3D"]
+transform = Transform3D(1.5, 0, 0, 0, 0.5, 0, 0, 0, 1.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_hew0n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/CharacterBody3D"]
+shape = SubResource("BoxShape3D_vwk55")
+
+[node name="CamController" type="Node3D" parent="Character/CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.855482, 0.517833, 0, -0.517833, 0.855482, 0, 0.25, 0)
+top_level = true
+
+[node name="CameraTarget" type="Node3D" parent="Character/CharacterBody3D/CamController"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, -1.04308e-07, 7.68078)
+
+[node name="Camera3D" type="Camera3D" parent="Character/CharacterBody3D/CamController/CameraTarget"]
+script = ExtResource("1_bo1nx")
 
 [node name="World" type="Node3D" parent="."]
 
