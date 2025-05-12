@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://btiewdhg87xca"]
+
+[ext_resource type="Script" uid="uid://x2moxvjvpyop" path="res://Scripts/obstacle.gd" id="1_wvtup"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8o5tm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wvtup"]
+
+[node name="Obstacle" type="Area3D"]
+script = ExtResource("1_wvtup")
+
+[node name="ObstacleCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_8o5tm")
+
+[node name="ObstacleMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_wvtup")

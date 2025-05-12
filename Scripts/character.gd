@@ -26,3 +26,8 @@ func _physics_process(delta: float) -> void:
 	#Make CamController match position of character
 	#lerp(where we start, where we end, how quickly)
 	$CamController.position = lerp($CamController.position, position, .07)
+
+
+func _on_obstacle_collided() -> void:
+	#reset player position on obstacle collision
+	position = Vector3(0, 0, 0)

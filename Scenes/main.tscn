@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://bym6y8lmq532b"]
+[gd_scene load_steps=16 format=3 uid="uid://bym6y8lmq532b"]
 
 [ext_resource type="Script" uid="uid://dg7igqr1g1jgf" path="res://Scripts/charac_cam.gd" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://dq1od00yllol3" path="res://Scripts/character.gd" id="1_jjgbg"]
 [ext_resource type="AudioStream" uid="uid://cwwt8pmi2wek2" path="res://Audio/In The Navy-usQ5_u7myic.mp3" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://btiewdhg87xca" path="res://Scenes/Assets/obstacle.tscn" id="3_jjvhh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hew0n"]
 albedo_color = Color(0.1368, 0.72, 0.26316, 1)
@@ -134,6 +135,11 @@ mesh = SubResource("BoxMesh_ohd7w")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/WorldGeometry/Walls/Exterior Walls/ExtWallN"]
 shape = SubResource("BoxShape3D_7u77a")
 
+[node name="Obstacles" type="Node3D" parent="World/WorldGeometry"]
+
+[node name="Obstacle" parent="World/WorldGeometry/Obstacles" instance=ExtResource("3_jjvhh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75257, 0, 0)
+
 [node name="Audio" type="Node" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Audio"]
@@ -141,3 +147,5 @@ stream = ExtResource("3_8gbba")
 volume_db = -15.0
 autoplay = true
 parameters/looping = true
+
+[connection signal="collided" from="World/WorldGeometry/Obstacles/Obstacle" to="Character/CharacterBody3D" method="_on_obstacle_collided"]
