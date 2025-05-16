@@ -5,6 +5,12 @@ const SPEED = 10.0
 const JUMP_VELOCITY = 4.5
 
 signal col_count_up
+signal stop
+signal restart
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("quit"):
+		get_tree().quit()
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -31,3 +37,8 @@ func _physics_process(delta: float) -> void:
 func _on_obstacle_body_entered(_body: Node3D) -> void:
 	position = Vector3(-23, 0, 23)
 	emit_signal("col_count_up")
+	emit_signal("restart")
+
+
+func _on_finish_zone_body_entered(_body: Node3D) -> void:
+	emit_signal("stop")

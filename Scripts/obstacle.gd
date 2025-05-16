@@ -1,6 +1,6 @@
 extends Area3D
 
-@onready var character = get_node("%CharacterBody3D")
+#Connect body_entered() signal to character!
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

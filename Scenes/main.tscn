@@ -1,10 +1,15 @@
-[gd_scene load_steps=19 format=3 uid="uid://bym6y8lmq532b"]
+[gd_scene load_steps=27 format=3 uid="uid://bym6y8lmq532b"]
 
 [ext_resource type="Script" uid="uid://dg7igqr1g1jgf" path="res://Scripts/charac_cam.gd" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://dq1od00yllol3" path="res://Scripts/character.gd" id="1_jjgbg"]
 [ext_resource type="AudioStream" uid="uid://cwwt8pmi2wek2" path="res://Audio/In The Navy-usQ5_u7myic.mp3" id="3_8gbba"]
-[ext_resource type="PackedScene" uid="uid://btiewdhg87xca" path="res://Scenes/Assets/obstacle.tscn" id="3_jjvhh"]
+[ext_resource type="Script" uid="uid://x2moxvjvpyop" path="res://Scripts/obstacle.gd" id="3_21xkr"]
+[ext_resource type="PackedScene" uid="uid://btiewdhg87xca" path="res://Scenes/Assets/obstacle.tscn" id="4_6bp64"]
+[ext_resource type="PackedScene" uid="uid://dpcfl3gbas7ox" path="res://Scenes/Assets/obstacle_moving.tscn" id="4_21xkr"]
 [ext_resource type="Script" uid="uid://csn6v28cyff5v" path="res://Scripts/collision_label.gd" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://c6cbck5ybjh4v" path="res://Scenes/Assets/obstacle_moving_2.tscn" id="6_344ge"]
+[ext_resource type="PackedScene" uid="uid://kegtf5hrloor" path="res://Scenes/Assets/obstacle_moving_3.tscn" id="7_ynf5e"]
+[ext_resource type="Script" uid="uid://c5gq2cimti6l3" path="res://Scenes/stopwatch.gd" id="10_hptm8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hew0n"]
 albedo_color = Color(0.1368, 0.72, 0.26316, 1)
@@ -44,11 +49,22 @@ size = Vector3(50, 0.1, 50)
 resource_local_to_scene = true
 size = Vector3(50, 1, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_6bp64"]
+resource_local_to_scene = true
+size = Vector3(40, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_344ge"]
+resource_local_to_scene = true
+size = Vector3(40, 1, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjvhh"]
 albedo_color = Color(0.2832, 0.59, 0.503073, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_kry3j"]
 material = SubResource("StandardMaterial3D_jjvhh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hptm8"]
+size = Vector3(2, 1, 2)
 
 [node name="Main" type="Node"]
 
@@ -144,8 +160,150 @@ shape = SubResource("BoxShape3D_7u77a")
 
 [node name="Obstacles" type="Node3D" parent="World/WorldGeometry"]
 
-[node name="Obstacle" parent="World/WorldGeometry/Obstacles" instance=ExtResource("3_jjvhh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75257, 0, 0)
+[node name="Static Obstacles" type="Node3D" parent="World/WorldGeometry/Obstacles"]
+
+[node name="Obstacle1" type="Area3D" parent="World/WorldGeometry/Obstacles/Static Obstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5919, 0, 19.763)
+script = ExtResource("3_21xkr")
+
+[node name="ObstacleCollision" type="CollisionShape3D" parent="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.797, 0, 0)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="ObstacleMesh" type="MeshInstance3D" parent="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7973, 0, 0)
+mesh = SubResource("BoxMesh_344ge")
+
+[node name="Obstacle2" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.69295, 10.6022, -0.051384, 21.2287)
+
+[node name="Obstacle3" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 4.71754, 12.6855, -0.0286074, 13.7428)
+
+[node name="Obstacle4" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(-4.37114e-08, 0, 14.1249, 0, 1, 0, -1, 0, -6.17418e-07, 16.1289, -0.051384, 12.3935)
+
+[node name="Obstacle5" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(-1, 0, -1.21338e-06, 0, 1, 0, 8.74228e-08, 0, -13.8794, 5.0599, -0.051384, 12.3935)
+
+[node name="Obstacle6" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(-4.37114e-08, 0, 10.8549, 0, 1, 0, -1, 0, -4.74481e-07, 8.98107, -0.051384, 5.30899)
+
+[node name="Obstacle8" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.146722, 0, 10.7374, 0, 1, 0, -0.989178, 0, 1.59265, 20.1865, -0.051384, 0.268567)
+
+[node name="Obstacle9" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.414852, 0, 9.87672, 0, 1, 0, -0.909889, 0, 4.50316, 12.3493, -0.051384, -4.77258)
+
+[node name="Obstacle10" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, 1.86161, -0.0697365, -2.04474)
+
+[node name="Obstacle11" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, -6.22102, -0.0697365, 4.09921)
+
+[node name="Obstacle12" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, -14.39, -0.0697365, 10.3088)
+
+[node name="Obstacle13" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, -21.2185, -0.0697365, 9.7084)
+
+[node name="Obstacle14" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, -13.0251, -0.0697365, 3.48027)
+
+[node name="Obstacle15" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, -21.2185, -0.0697365, 9.7084)
+
+[node name="Obstacle16" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, -13.0251, -0.0697365, 3.48027)
+
+[node name="Obstacle17" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, -15.9885, -0.0697365, -0.0323179)
+
+[node name="Obstacle18" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.605155, 0, -8.64164, 0, 1, 0, 0.796107, 0, 6.56888, -7.95882, -0.0697365, -6.13599)
+
+[node name="Obstacle19" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(0.796107, 0, 5.89163, 0, 1, 0, -0.605155, 0, 7.75069, -1.3033, -0.0697365, -5.49507)
+
+[node name="Obstacle7" parent="World/WorldGeometry/Obstacles/Static Obstacles" instance=ExtResource("4_6bp64")]
+transform = Transform3D(-0.41013, 0, 7.75252, 0, 1, 0, -0.912027, 0, -3.48624, 21.7353, -0.051384, 2.70748)
+
+[node name="Moving Obstacles" type="Node3D" parent="World/WorldGeometry/Obstacles"]
+
+[node name="Obstacle_Moving1" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(9.1031, 0, 4.46638e-06, 0, 1, 0, -4.06579e-05, 0, 1, -10.9874, 0, 20.0756)
+
+[node name="Obstacle_Moving9" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(9.1031, 0, 4.46638e-06, 0, 1, 0, -4.06579e-05, 0, 1, 8.55019, 3.8147e-06, 0.337826)
+
+[node name="Obstacle_Moving2" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(9.1031, 0, 4.46638e-06, 0, 1, 0, -4.06579e-05, 0, 1, 1.28122, 0, 20.0756)
+
+[node name="Obstacle_Moving3" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(9.1031, 0, 4.46638e-06, 0, 1, 0, -4.06579e-05, 0, 1, 19.715, 0, 19.7495)
+
+[node name="Obstacle_Moving" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, 7.3178, 0, 7.18637)
+
+[node name="Obstacle_Moving20" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, 7.3178, 0, 7.18637)
+
+[node name="Obstacle_Moving5" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(-1, 0, -4.37896e-06, 0, 1, 0, 4.37896e-06, 0, -1, 14.3178, 0, 9.18637)
+
+[node name="Obstacle_Moving6" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(-0.707104, 0, -0.70711, 0, 1, 0, 0.70711, 0, -0.707104, 23.3178, 0, 5.18637)
+
+[node name="Obstacle_Moving7" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(0.707104, 0, 0.70711, 0, 1, 0, -0.70711, 0, 0.707104, 16.9539, 0, 8.72194)
+
+[node name="Obstacle_Moving8" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(0.707104, 0, 0.70711, 0, 1, 0, -0.70711, 0, 0.707104, 7.76151, 0, 17.9144)
+
+[node name="Obstacle_Moving4" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, 14.0002, 1.90735e-06, 13.914)
+
+[node name="Obstacle_Moving21" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -21.6767, 1.90735e-06, -11.6949)
+
+[node name="Obstacle_Moving22" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -18.1534, 1.90735e-06, -17.0401)
+
+[node name="Obstacle_Moving23" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -8.84047, 1.90735e-06, -9.39733)
+
+[node name="Obstacle_Moving24" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -14.6346, 1.90735e-06, -22.9164)
+
+[node name="Obstacle_Moving10" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("7_ynf5e")]
+transform = Transform3D(0.70711, 0, -0.707104, 0, 1, 0, 0.707104, 0, 0.70711, -3.79773, 0, 7.80132)
+
+[node name="Obstacle_Moving11" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("7_ynf5e")]
+transform = Transform3D(-0.499996, 0, -0.866028, 0, 1, 0, 0.866028, 0, -0.499996, -6.03137, 0, 10.035)
+
+[node name="Obstacle_Moving12" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("7_ynf5e")]
+transform = Transform3D(-0.866023, 0, -0.500004, 0, 1, 0, 0.500004, 0, -0.866023, 0.896852, 0, 14.0349)
+
+[node name="Obstacle_Moving13" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -7.66821, 0, -0.709236)
+
+[node name="Obstacle_Moving14" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("4_21xkr")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -6.00857, 0, -2.03137)
+
+[node name="Obstacle_Moving15" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -23.0001, 0, -3.93353)
+
+[node name="Obstacle_Moving16" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(-1, 0, -4.5538e-06, 0, 1, 0, 4.5538e-06, 0, -1, -12.48, 0, -5.68086)
+
+[node name="Obstacle_Moving17" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -22.5387, 0, -7.41617)
+
+[node name="Obstacle_Moving18" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(0.965927, 0, -0.258815, 0, 1, 0, 0.258815, 0, 0.965927, -21.2233, 0, -14.3664)
+
+[node name="Obstacle_Moving19" parent="World/WorldGeometry/Obstacles/Moving Obstacles" instance=ExtResource("6_344ge")]
+transform = Transform3D(4.50015e-06, 0, -1, 0, 1, 0, 1, 0, 4.50015e-06, -23.1426, 0, -17.449)
 
 [node name="Start_Plane" type="MeshInstance3D" parent="World/WorldGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0, 23)
@@ -156,6 +314,13 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -23)
 mesh = SubResource("PlaneMesh_kry3j")
 skeleton = NodePath("../../..")
+
+[node name="Finish_Zone" type="Area3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.2547, 0.550172, -22.9925)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Finish_Zone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.264517, 0, -0.00827599)
+shape = SubResource("BoxShape3D_hptm8")
 
 [node name="Audio" type="Node" parent="."]
 
@@ -174,13 +339,68 @@ offset_bottom = 40.0
 [node name="Label" type="Label" parent="Control"]
 self_modulate = Color(0.10748, 0.10748, 0.10748, 1)
 layout_mode = 0
-offset_left = 510.0
-offset_top = 113.0
-offset_right = 644.0
-offset_bottom = 136.0
+offset_left = 13.0
+offset_top = 45.0
+offset_right = 147.0
+offset_bottom = 68.0
 text = "Collision Count: 0"
 horizontal_alignment = 2
 script = ExtResource("5_kry3j")
 
+[node name="Stopwatch" type="Label" parent="Control"]
+modulate = Color(0.099986, 0.099986, 0.099986, 1)
+layout_mode = 0
+offset_left = 64.0
+offset_top = 21.0
+offset_right = 104.0
+offset_bottom = 44.0
+script = ExtResource("10_hptm8")
+
 [connection signal="col_count_up" from="Character/CharacterBody3D" to="Control/Label" method="_on_col_count_up"]
-[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Obstacle" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="restart" from="Character/CharacterBody3D" to="Control/Stopwatch" method="_on_restart"]
+[connection signal="stop" from="Character/CharacterBody3D" to="Control/Stopwatch" method="_on_stop"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle1" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle2" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle3" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle4" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle5" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle6" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle8" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle9" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle10" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle11" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle12" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle13" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle14" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle15" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle16" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle17" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle18" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle19" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Static Obstacles/Obstacle7" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving1" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving9" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving2" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving3" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving20" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving5" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving6" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving7" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving8" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving4" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving21" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving22" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving23" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving24" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving10" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving11" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving12" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving13" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving14" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving15" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving16" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving17" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving18" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/WorldGeometry/Obstacles/Moving Obstacles/Obstacle_Moving19" to="Character/CharacterBody3D" method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="World/Finish_Zone" to="Character/CharacterBody3D" method="_on_finish_zone_body_entered"]

@@ -1,0 +1,82 @@
+[gd_scene load_steps=7 format=3 uid="uid://kegtf5hrloor"]
+
+[ext_resource type="Script" uid="uid://djlcptok2e5lh" path="res://Scripts/obstacle_moving.gd" id="1_ooqrx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6emee"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_n3dp7"]
+resource_local_to_scene = true
+
+[sub_resource type="Animation" id="Animation_n3dp7"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_6emee"]
+resource_name = "SPIN"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.6, 1, 5, 0, 2.23319e-05, 0.6001, 1, 4.99998, 0, 5.3376)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.6, 1, 5, 0, 2.23319e-05, 0.6001, 1, 4.99998, 0, 5.3376)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.6, 1, 0, 0.92388, 0, -0.382683)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeshInstance3D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.6, 1, 0, 0.92388, 0, -0.382683)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_os3xg"]
+_data = {
+&"RESET": SubResource("Animation_n3dp7"),
+&"SPIN": SubResource("Animation_6emee")
+}
+
+[node name="Obstacle_Moving" type="Area3D"]
+transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, 0, 0, 0)
+script = ExtResource("1_ooqrx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.366606, 0, -0.930376, 0, 1, 0, 0.930376, 0, 0.366606, 0, 0, 0)
+shape = SubResource("BoxShape3D_6emee")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.366606, 0, -0.930376, 0, 1, 0, 0.930376, 0, 0.366606, 0, 0, 0)
+mesh = SubResource("BoxMesh_n3dp7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_os3xg")
+}

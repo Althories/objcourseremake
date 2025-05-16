@@ -1,6 +1,9 @@
 extends Label
 
-var collision_count = -1
+#I don't know what's causing it but the signal fires once on ready() per obstacle in scene.
+#The negative count here should reflect the number of obstacle nodes in the scene
+
+var collision_count = -2
 
 func _ready():
 	text = "Collision Count: %s" % collision_count
