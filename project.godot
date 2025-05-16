@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="ObjCourseRemake"
+run/main_scene="uid://bym6y8lmq532b"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
