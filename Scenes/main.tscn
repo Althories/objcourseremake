@@ -829,11 +829,11 @@ mesh = SubResource("BoxMesh_hew0n")
 shape = SubResource("BoxShape3D_vwk55")
 
 [node name="CamController" type="Node3D" parent="Character/CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 0.761029, 0.648718, 0, -0.648718, 0.761029, -23, 0, 23)
+transform = Transform3D(1, 0, 0, 0, 0.855482, 0.517833, 0, -0.517833, 0.855482, -23, 0, 23)
 top_level = true
 
 [node name="CameraTarget" type="Node3D" parent="Character/CharacterBody3D/CamController"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, -1.90041e-07, 8.5575)
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, -1.04308e-07, 7.68078)
 
 [node name="Camera3D" type="Camera3D" parent="Character/CharacterBody3D/CamController/CameraTarget"]
 script = ExtResource("1_bo1nx")
